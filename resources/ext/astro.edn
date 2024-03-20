@@ -1,0 +1,5 @@
+{:name "astro"
+ :quanta/template [astro.template/astro-chart]
+
+ }
+
