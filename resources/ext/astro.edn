@@ -1,5 +1,6 @@
 {:name "astro"
- :quanta/template [astro.template/astro-chart]
+ :quanta/template [astro.template/astro-chart
+                   astro.template/moon-chart]
 
  }
 
