@@ -3,8 +3,8 @@
 (def astro-chart
   {:id :astro-chart
    :algo {:type :time
-          :algo 'astro.algo.planets/astro-algo
-          :calendar [:crypto :m]}
+          :calendar [:crypto :m]
+          :algo 'astro.algo.planets/astro-algo}
    :options [{:type :select
               :path :asset
               :name "Asset"
@@ -14,8 +14,8 @@
 (def moon-chart
   {:id :moon-chart
    :algo {:type :trailing-bar
-          :trailing-n 600
           :calendar [:crypto :d]
+          :trailing-n 600
           :asset "BTCUSDT"
           :import :bybit
           :algo 'astro.algo.planets/astro-algo}
@@ -23,7 +23,7 @@
               :path :asset
               :name "Asset"
               :spec ["BTCUSDT" "ETHUSDT"]}]
-   :table {:viz 'ta.viz.ds.rtable
+   :table {:viz 'ta.viz.ds.rtable/rtable-render-spec
            :viz-options {:class "table-head-fixed padding-sm table-red table-striped table-hover"
                          :style {:width "50vw"
                                  :height "40vh"

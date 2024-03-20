@@ -1,4 +1,4 @@
-(ns astro.algo.algo
+(ns astro.algo.planets
   (:require
    [tick.core :as t]
    [ephemeris.core :refer [calc]]))
