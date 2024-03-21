@@ -18,7 +18,7 @@
           :trailing-n 600
           :asset "BTCUSDT"
           :import :bybit
-          :algo 'astro.algo.planets/astro-algo}
+          :algo 'astro.algo.moon/moon-algo}
    :options [{:type :select
               :path :asset
               :name "Asset"
