@@ -1,23 +1,23 @@
 (ns astro.algo.moon
   (:require
    [tablecloth.api :as tc]
-   [indicator :refer [prior]]
-   [astro.moon :refer [moon-phase-from-instant phase->text]]))
+   [ta.indicator :refer [prior]]
+   [astro.moon :refer [inst->moon-phase-kw phase->text]]))
 
-; :text "🌑"
-
-
-(defn moon-algo [env opts bar-ds]
+(defn moon-algo [_env _opts bar-ds]
   (let [date (:date bar-ds)
         _ (println "MOON PHASE CALC..")
-        phase (map moon-phase-from-instant date)
+        phase (map inst->moon-phase-kw date)
         _ (println "CHANGE CALC..")
         phase-prior (prior phase)
-        change (map (fn [p p1]
-                      (if (= p p1) nil phase))
-                    phase phase-prior)]
+        phase-change (map (fn [p p1]
+                            (if (= p p1) nil phase))
+                          phase phase-prior)]
     (println "moon-algo finished!")
-    (tc/add-column bar-ds :moon-phase change)))
+    (tc/add-columns bar-ds
+                    {:moon-phase phase
+                     :moon-phase-prior phase-prior
+                     :moon-phase-change phase-change})))
 
 
 

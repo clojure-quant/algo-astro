@@ -46,17 +46,19 @@
 
 (def inst->moon-phase-kw (comp moon-phase->kw moon-phase-from-instant))
 
+(def phase-unicode-dict 
+  {:new  "🌑" ;New Moon	U+1F311
+   :i1   "🌒" ;Waxing Crescent Moon	U+1F312
+   :i2   "🌓" ;First Quarter Moon	U+1F313
+   :i3   "🌔" ;Waxing Gibbous Moon	U+1F314
+   :full "🌕" ;Full Moon	U+1F315
+   :d1   "🌖" ;Waning Gibbous Moon	U+1F316
+   :d2   "🌗" ;Last Quarter Moon	U+1F317
+   :d3   "🌘" ;Waning Crescent Moon	U+1F318
+   })
+
 (defn phase->text [phase]
-  (case phase
-    :new  "🌑" ;New Moon	U+1F311
-    :i1   "🌒" ;Waxing Crescent Moon	U+1F312
-    :i2   "🌓" ;First Quarter Moon	U+1F313
-    :i3   "🌔" ;Waxing Gibbous Moon	U+1F314
-    :full "🌕" ;Full Moon	U+1F315
-    :d1   "🌖" ;Waning Gibbous Moon	U+1F316
-    :d2   "🌗" ;Last Quarter Moon	U+1F317
-    :d3   "🌘" ;Waning Crescent Moon	U+1F318
-    "?"))
+  (or (get phase-unicode-dict phase) "?"))
 
 (comment
   ; test if moon phase from localdate is the same as using an instant

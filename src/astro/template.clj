@@ -23,16 +23,23 @@
               :path :asset
               :name "Asset"
               :spec ["BTCUSDT" "ETHUSDT"]}]
+   ; chart
+   :chart {:viz 'ta.viz.ds.highchart/highstock-render-spec
+           :viz-options {:chart {:box :fl}
+                         :charts [{:close :candlestick #_:ohlc
+                                   :moon-phase {:type :flags
+                                                :v2style {:full "url(/r/astro/moon-filled.svg)"}}}
+                                  {:volume {:type :column :color "red"}}]}}
+   ;table
    :table {:viz 'ta.viz.ds.rtable/rtable-render-spec
            :viz-options {:class "table-head-fixed padding-sm table-red table-striped table-hover"
                          :style {:width "50vw"
                                  :height "40vh"
                                  :border "3px solid green"}
-                         :cols [{:path :date :max-width "60px"}
-                                {:path :close}
-                                {:path :moon-phase}]}}
-   :chart {:viz 'ta.viz.ds.highchart/highstock-render-spec
-           :viz-options {:chart {:box :fl}
-                         :charts [{:close :candlestick #_:ohlc
-                                   :moon-phase :flags}
-                                  {:volume {:type :column :color "red"}}]}}})
+                         :columns [{:path :date :max-width "60px"}
+                                    {:path :close}
+                                    {:path :moon-phase}
+                                    {:path :moon-phase-prior}
+                                    {:path :moon-phase-change}
+                                   ]}}
+   })
