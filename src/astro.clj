@@ -3,8 +3,10 @@
    [clojure.data :refer [diff]]
    [taoensso.timbre :refer [debug info warn error]]
    [ephemeris.core :refer [calc]]
+   [ephemeris.time :refer [utc-to-jd]]
    [clojure.pprint :refer [print-table]]
-   [tick.core :as t]))
+   [tick.core :as t])
+  (:import (swisseph SwissEph SweConst)))
 
 
 (def planet-dict 
@@ -249,6 +251,32 @@
           (recur dt-next (conj r (dt-format dt-next)))
           r)))))
 
+(defn horizontal-pos
+  "calc the azimuth angle from the observers view to the body.
+   returns double value. 0° = north, 90° = east, 180° = south and 270° = west
+   doc: https://www.astro.com/swisseph/swephprg.htm#_Toc112948998"
+  [utc-str {:keys [type lon lat height atpress attemp]} body-pos]
+  (let [ut (utc-to-jd utc-str)
+        calc_flag (case type
+                    :ecliptic (SweConst/SE_ECL2HOR)
+                    :equatorial (SweConst/SE_EQU2HOR))
+        geopos (double-array [(if lon lon 0)
+                              (if lat lat 0)
+                              (if height height 0)])
+        atpress (if atpress atpress 0)
+        attemp (if attemp attemp 0)
+        xin (double-array [(:lon body-pos) (:lat body-pos) (if (:dist body-pos)
+                                                             (:dist body-pos)
+                                                             0)])
+        xaz (double-array 3)
+        sw (SwissEph.)
+        _ (.swe_azalt sw ut calc_flag geopos atpress attemp xin xaz)
+        [azimuth true-altitude apparent-altitude] xaz]
+    ; convert azimuth value (south to north)
+    (if (>= azimuth 180)
+      (- azimuth 180)
+      (+ azimuth 180))))
+
 (defn astro-test [& _]
    ;(println "subsets: " (subsets 2 [:a :b :c :d]))
   (println "diffs: "
@@ -285,4 +313,13 @@
       (spit "../../data/aspects.edn" (pr-str aspects)))
 ;
     ))
+
+(comment
+  (let [query (assoc geo-req :utc "2022-06-15T13:00:00Z")
+        res (calc query)
+        {:keys [points angles houses wanted result]} res
+        {:keys [utc geo]} wanted]
+    (horizontal-pos utc (merge {:type :ecliptic} geo) (:Sun points)))
+
+  )
 
