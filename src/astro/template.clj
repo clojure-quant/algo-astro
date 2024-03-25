@@ -32,14 +32,9 @@
                                   {:volume {:type :column :color "red"}}]}}
    ;table
    :table {:viz 'ta.viz.ds.rtable/rtable-render-spec
-           :viz-options {:class "table-head-fixed padding-sm table-red table-striped table-hover"
-                         :style {:width "50vw"
-                                 :height "40vh"
-                                 :border "3px solid green"}
-                         :columns [{:path :date :max-width "60px"}
+           :viz-options {:columns [{:path :date :max-width "60px"}
                                     {:path :close}
                                     {:path :moon-phase}
                                     {:path :moon-phase-prior}
-                                    {:path :moon-phase-change}
-                                   ]}}
+                                    {:path :moon-phase-change}]}}
    })
