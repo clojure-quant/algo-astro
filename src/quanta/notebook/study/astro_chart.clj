@@ -1,4 +1,4 @@
-(ns quanta.notebook.study.astro-backtest
+(ns quanta.notebook.study.astro-chart
   (:require
    [tick.core :as t]
    [ta.interact.template :refer [load-template show-result]]
