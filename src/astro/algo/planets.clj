@@ -1,10 +1,9 @@
 (ns astro.algo.planets
   (:require
    [tick.core :as t]
-   [ephemeris.core :refer [calc]]))
+   [ephemeris.core :refer [calc-date]]))
 
-(def geo-req {:utc "2022-03-15T00:13:00Z"
-                   ;"2009-02-03T21:43:00Z"
+(def geo-req {:utc "2022-03-15T00:13:00Z" ; will get overritten.
               :geo {:lat 40.58 :lon -74.48}
               :angles [:Asc :MC :Angle]
               :points [:Sun :Moon
@@ -14,9 +13,7 @@
                        ;:Chiron :Pholus :Ceres :Pallas :Juno :Vesta 
                        :TrueNode]})
 
-(defn calc-date [dt]
-  (let [sdt (str dt)]
-    (calc (assoc geo-req :utc sdt))))
+
 
 (defn extract-planets [result]
   (map (fn [[planet {:keys [lon]}]]
@@ -33,8 +30,14 @@
 
 (comment
 
-  (-> (calc-date (t/instant))
+  (-> (t/instant)
+      calc-date
       extract-planets)
+
+  (-> (t/zoned-date-time "2024-02-22T17:00-05:00[America/New_York]")
+      calc-date
+      extract-planets)
+   
 
   (astro-algo nil nil (t/instant))
  ;; => {:date #inst "2024-03-12T14:39:41.432817061-00:00",

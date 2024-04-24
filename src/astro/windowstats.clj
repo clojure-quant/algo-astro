@@ -1,12 +1,9 @@
 (ns astro.windowstats
   (:require
-   [clojure.edn :as edn]
-   [tick.core :as t]
    [tablecloth.api :as tc]
    [tech.v3.datatype :as dtype]
    [tech.v3.datatype.functional :as fun]
-   [ta.warehouse :refer [load-symbol]]
-   [ta.helper.date-ds :refer [select-rows-interval days-ago days-ago-instant now]]
+   [ta.indicator.date :refer [select-rows-interval]]
    [ta.indicator.returns :refer [log-return]]))
 
 ;; interval return
@@ -51,14 +48,3 @@
          :trend (trend change-left change-right)})
       {:chg 0 :bars 0
        :chg-l 0 :chg-r 0 :trend 0.0})))
-
-(comment
-  (let [ds (load-symbol :crypto "15" "BTCUSD")
-        dt-start (days-ago 50)
-        dt-end (days-ago 20)]
-    (println ds)
-    (println (select-rows-interval ds dt-start dt-end))
-    (println "interval " dt-start "-" dt-end " change: " (window-stats ds dt-start dt-end))
-    (println (select-first-mid-last ds)))
- ; 
-  )
