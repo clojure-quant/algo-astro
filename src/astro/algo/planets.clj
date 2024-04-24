@@ -1,7 +1,7 @@
 (ns astro.algo.planets
   (:require
    [tick.core :as t]
-   [ephemeris.core :refer [calc-date]]))
+   [astro :refer [calc-date]]))
 
 (def geo-req {:utc "2022-03-15T00:13:00Z" ; will get overritten.
               :geo {:lat 40.58 :lon -74.48}
