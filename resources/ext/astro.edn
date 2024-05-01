@@ -1,6 +1,9 @@
 {:name "astro"
  :quanta/template [astro.template/astro-chart
-                   astro.template/moon-chart]
+                   astro.template/moon-phase
+                   astro.template/moon-signal]
+
+
 
  }
 
