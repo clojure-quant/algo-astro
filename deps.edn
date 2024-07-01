@@ -1,6 +1,6 @@
 {:paths ["src" "resources"]
  :deps
- {org.clojure/clojure    {:mvn/version "1.11.1"}
+ {org.clojure/clojure    {:mvn/version "1.11.3"}
   ephemeris/ephemeris {:mvn/version "0.0.1"}
   org.pinkgorilla/modular {:mvn/version "0.2.56"}}
  :aliases
