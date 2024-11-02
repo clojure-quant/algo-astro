@@ -1,4 +1,4 @@
-(ns astro.algo.planets
+(ns astro.indicator.planets
   (:require
    [tick.core :as t]
    [astro :refer [calc-date]]))
@@ -13,20 +13,16 @@
                        ;:Chiron :Pholus :Ceres :Pallas :Juno :Vesta 
                        :TrueNode]})
 
-
-
 (defn extract-planets [result]
   (map (fn [[planet {:keys [lon]}]]
          {:planet planet :degree lon}) (:points result)))
 
-
-(defn astro-algo [env opts dt]
+(defn astro-algo [_opts dt]
   (if dt
     {:date dt
      :planets (-> (calc-date dt)
-                  extract-planets)}
+                   extract-planets)}
     {}))
-
 
 (comment
 
@@ -37,7 +33,6 @@
   (-> (t/zoned-date-time "2024-02-22T17:00-05:00[America/New_York]")
       calc-date
       extract-planets)
-   
 
   (astro-algo nil nil (t/instant))
  ;; => {:date #inst "2024-03-12T14:39:41.432817061-00:00",
@@ -54,6 +49,5 @@
  ;;      {:planet :Uranus, :degree 49.9589078417395}
  ;;      {:planet :Jupiter, :degree 43.41381669923683})}
 
-
- ; 
+; 
   )

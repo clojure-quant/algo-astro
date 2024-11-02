@@ -6,8 +6,7 @@
    [clojure.pprint :refer [print-table]])
   (:import (swisseph SwissEph SweConst)))
 
-
-(def planet-dict 
+(def planet-dict
   {:Moon  "☾"
    :Mercury "☿"
    :Venus "♀︎"
@@ -18,13 +17,11 @@
    :Neptune "♆"
    :TrueNode "☊"
    :Pluto "♇"
-   :Uranus "♅"
-   })
+   :Uranus "♅"})
 
 (defn get-body-text [b]
   ;(warn "body: " b)
   (or (get planet-dict b) "?"))
-
 
 ; https://github.com/astrolin/ephemeris/blob/develop/src/clj/ephemeris/points.clj
 
@@ -77,8 +74,8 @@
   (-> dt t/instant str))
 
 #_(defn dt-format [dt]
-  (let [dtz (t/zoned-date-time dt)]
-    (t/format (t/formatter :iso-instant) dtz))) ; :iso-date
+    (let [dtz (t/zoned-date-time dt)]
+      (t/format (t/formatter :iso-instant) dtz))) ; :iso-date
 
 (defn calc-date [dt]
   (calc (assoc geo-req :utc (utc-date-str dt))))
@@ -93,14 +90,11 @@
          points)))
 
 (defn print-point-table [res]
-  (->> res 
-      point-table 
-      (print-table [:name :text :sign :lon :lat :sdd
+  (->> res
+       point-table
+       (print-table [:name :text :sign :lon :lat :sdd
                     ; :sun-time dstart
-                    ])))
-
-
-
+                     ])))
 (defn horizontal-pos
   "calc the azimuth angle from the observers view to the body.
    returns double value. 0° = north, 90° = east, 180° = south and 270° = west
@@ -127,13 +121,10 @@
       (- azimuth 180)
       (+ azimuth 180))))
 
-
 (comment
   (let [query (assoc geo-req :utc "2022-06-15T13:00:00Z")
         res (calc query)
         {:keys [points angles houses wanted result]} res
         {:keys [utc geo]} wanted]
-    (horizontal-pos utc (merge {:type :ecliptic} geo) (:Sun points)))
-
-  )
+    (horizontal-pos utc (merge {:type :ecliptic} geo) (:Sun points))))
 

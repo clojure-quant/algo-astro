@@ -46,7 +46,7 @@
 
 (def inst->moon-phase-kw (comp moon-phase->kw moon-phase-from-instant))
 
-(def phase-unicode-dict 
+(def phase-unicode-dict
   {:new  "🌑" ;New Moon	U+1F311
    :i1   "🌒" ;Waxing Crescent Moon	U+1F312
    :i2   "🌓" ;First Quarter Moon	U+1F313

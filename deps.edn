@@ -2,7 +2,8 @@
  :deps
  {org.clojure/clojure    {:mvn/version "1.11.3"}
   ephemeris/ephemeris {:mvn/version "0.0.1"}
-  org.pinkgorilla/modular {:mvn/version "0.2.56"}}
+  org.pinkgorilla/dali {:mvn/version "0.1.24"}
+  org.pinkgorilla/modular {:mvn/version "0.2.61"}}
  :aliases
  {:test {:extra-paths ["test"]
          :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"

@@ -1,9 +1,9 @@
 (ns astro.aspect
-  (:require 
-    [clojure.data :refer [diff]]
-    [clojure.pprint :refer [print-table]]
-    [tick.core :as t]
-    [astro]))
+  (:require
+   [clojure.data :refer [diff]]
+   [clojure.pprint :refer [print-table]]
+   [tick.core :as t]
+   [astro]))
 
 (defn- subsets [n items]
   (cond
@@ -148,7 +148,6 @@
 (defn calc-aspect-durations [dates]
   (flatten (transduce (xf-aspect-duration) conj (map aspects-for-date dates))))
 
-
 #_(defn find-aspects-duplicates [res]
     (let [points (:points res)
           planets (keys points)]
@@ -162,13 +161,11 @@
             (when c
               {:type c :a a :b b}))))))
 
-
 ;; print
 
 (defn print-aspects [{:keys [date aspects]}]
   (print "\r\nAspects @ " date)
   (print-table aspects))
-
 
 (defn print-aspects-window [aspects]
   (print-table [:type :a :b :start :end] aspects))
@@ -187,7 +184,6 @@
        (filter p-select-has-window)
        (filter (p-before-now (t/instant)))))
 
-
 (defn moon-aspect? [{:keys [a b]}]
   (or (= a :Moon) (= b :Moon)))
 
@@ -196,5 +192,4 @@
 
 (defn aspect-type? [T A B]
   (fn [{:keys [type a b]}]
-    (and (= type T) (= a A) (= b B)))
-   )
+    (and (= type T) (= a A) (= b B))))
