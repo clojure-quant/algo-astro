@@ -1,6 +1,6 @@
 (ns astro.template
   (:require
-   [quanta.algo.env.bars :refer [get-trailing-bars]]
+   [quanta.bar.env :refer [get-trailing-bars]]
    [astro.indicator.moon]
    [astro.indicator.planets]
    [astro.plot]
@@ -8,9 +8,11 @@
 
 (def astro-chart
   {:id :astro-chart
-   :algo {:type :time
-          :calendar [:crypto :m]
-          :algo astro.indicator.planets/astro-algo}
+   :algo {:calendar [:crypto :m]
+          :fn astro.indicator.planets/astro-algo
+          :sp? false
+          :env? false
+          }
    :options [{:type :select
               :path :asset
               :name "Asset"
@@ -18,27 +20,15 @@
    :chart {:viz astro.plot/astro-hiccup}})
 
 
-(defn moon-algo [opts dt]
-  (->> (get-trailing-bars opts dt)
-       (astro.indicator.moon/moon-algo opts)))
-
 (def moon-phase
   {:id :moon-phase
-   :algo [{:asset "BTCUSDT"
-           :calendar [:crypto :d]
-           :bardb :nippy
-           :trailing-n 600}
-          :day {:calendar [:crypto :d]
-                :algo get-trailing-bars
-                :bardb :nippy
-                :trailing-n 1100}
-          :moon-bad {:formula [:day]
-                 :algo astro.indicator.moon/moon-algo}
-          :moon {:calendar [:crypto :d]
-                 :algo moon-algo
-                 }
-          
-          ]
+   :algo [{:asset "BTCUSDT"}
+          :bars {:calendar [:crypto :d]
+                 :fn get-trailing-bars
+                 :bardb :nippy
+                 :trailing-n 600}
+          :moon {:formula [:bars]
+                 :fn astro.indicator.moon/moon-algo}]
    :options [{:type :select
               :path [0 :asset]
               :name "Asset"
@@ -61,27 +51,16 @@
                                    {:path :moon-phase-prior}
                                    {:path :moon-phase-text}]}}})
 
-(defn moon-algo-signal [opts dt]
-  (->> (get-trailing-bars opts dt)
-       (astro.indicator.moon/moon-signal-indicator opts)))
 
 (def moon-signal
   {:id :moon-signal
-   :algo [{:asset "BTCUSDT"
-           :calendar [:crypto :d]
-           :bardb :nippy
-           :trailing-n 600}
-          :bars {:algo get-trailing-bars
-                 :calendar [:crypto :d]
+   :algo [{:asset "BTCUSDT"}
+          :bars {:calendar [:crypto :d]
+                 :fn get-trailing-bars
                  :bardb :nippy
-                 :trailing-n 600
-                 :asset "BTCUSDT"}
-          :moon-bad {:formula [:bars]
-                     :algo astro.indicator.moon/moon-signal-indicator}
-           :moon {:calendar [:crypto :d]
-                 :algo moon-algo-signal}
-          
-          ]
+                 :trailing-n 600}
+          :moon {:formula [:bars]
+                 :fn astro.indicator.moon/moon-signal-indicator}]
    :options [{:type :select
               :path [0 :asset]
               :name "Asset"

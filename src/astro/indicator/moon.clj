@@ -4,7 +4,6 @@
    [tech.v3.datatype :as dtype]
    [ta.indicator :refer [prior]]
    [astro.moon :refer [inst->moon-phase-kw phase->text]]
-   [quanta.dag.env :refer [log]]
    [quanta.dali.ds :refer [sanitize-ds]]
    ))
 
@@ -12,8 +11,6 @@
   (dtype/emap inst->moon-phase-kw :keyword col-date))
 
 (defn moon-algo [_opts bar-ds]
-  (log "moon-algo bar-ds" bar-ds)
-  (log "2. moon-algo bar-ds" bar-ds)
   (let [date (:date bar-ds)
         phase (moon-phase date) ;(map inst->moon-phase-kw date)
         phase-text (map phase->text phase)
@@ -45,7 +42,6 @@
   (dtype/emap moon-phase->signal :keyword moon-phase))
 
 (defn moon-signal-indicator [opts bar-ds]
-  (log "calculating moon signal bar-ds: " bar-ds)
   (let [col-date (:date bar-ds)
         col-moon-phase (moon-phase col-date)
         col-moon-signal (moon-signal col-moon-phase)]
