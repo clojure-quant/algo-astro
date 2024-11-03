@@ -8,29 +8,26 @@
 
 (def astro-chart
   {:id :astro-chart
-   :algo {:calendar [:crypto :m]
-          :fn astro.indicator.planets/astro-algo
-          :sp? false
-          :env? false
-          }
-   :options [{:type :select
-              :path :asset
-              :name "Asset"
-              :spec ["BTCUSDT" "ETHUSDT"]}]
-   :chart {:viz astro.plot/astro-hiccup}})
+   :algo {:algo {:calendar [:crypto :m]
+                 :fn astro.indicator.planets/astro-algo
+                 :sp? false
+                 :env? false}}
+   :options []
+   :chart {:viz astro.plot/astro-hiccup
+           :key :algo}})
 
 
 (def moon-phase
   {:id :moon-phase
-   :algo [{:asset "BTCUSDT"}
+   :algo {:* {:asset "BTCUSDT"}
           :bars {:calendar [:crypto :d]
                  :fn get-trailing-bars
                  :bardb :nippy
                  :trailing-n 600}
           :moon {:formula [:bars]
-                 :fn astro.indicator.moon/moon-algo}]
+                 :fn astro.indicator.moon/moon-algo}}
    :options [{:type :select
-              :path [0 :asset]
+              :path [:* :asset]
               :name "Asset"
               :spec ["BTCUSDT" "ETHUSDT"]}]
    ; chart
@@ -54,15 +51,15 @@
 
 (def moon-signal
   {:id :moon-signal
-   :algo [{:asset "BTCUSDT"}
+   :algo {:* {:asset "BTCUSDT"}
           :bars {:calendar [:crypto :d]
                  :fn get-trailing-bars
                  :bardb :nippy
                  :trailing-n 600}
           :moon {:formula [:bars]
-                 :fn astro.indicator.moon/moon-signal-indicator}]
+                 :fn astro.indicator.moon/moon-signal-indicator}}
    :options [{:type :select
-              :path [0 :asset]
+              :path [:* :asset]
               :name "Asset"
               :spec ["BTCUSDT" "ETHUSDT"]}]
    ; chart
