@@ -41,6 +41,7 @@
                                   {:volume {:type :column :color "red"}}]}}
    ;table
    :table {:key :moon
+           :env? false
            :viz plot/rtable-ds
            :viz-options {:columns [{:path :date :max-width "60px"}
                                    {:path :close}
@@ -73,6 +74,7 @@
    ;table
    :table {:viz plot/rtable-ds
            :key :moon
+           :env? false
            :viz-options {:columns [{:path :date :max-width "60px"}
                                    {:path :close}
                                    {:path :moon-phase}]}}})
